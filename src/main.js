@@ -1,30 +1,10 @@
-/*
-
-PLANNING:
-
-isAValidMove(x, y) 
-  return true/false if move is valid
-  i.e. x and y are between 0-7 (inclusive)
-
-getKnightMoves({x, y}) 
-  return array of valid moves
-  [{2, 5}, {4, 5}, ...]
-
-getKnightPath({x, y})
-  create an adjacency list
-  call getKnightMoves
-  for each knight move
-  also call getknightmoves
-  check if move is our target 
-  if it is return all moves in this edge list
-
-*/
+import { MoveList } from "./MoveList.js";
 
 /*
   Chessboard positions are indicated using [x, y] coordinates starting from the bottom left corner
 */
 
-const MAX_FILE_AND_RANK = 7; // Where first file/rank is 0
+const MAX_FILE_AND_RANK = 7; // Last file and rank starting from 0
 
 function isAValidPosition([x, y]) {
   return x >= 0 && x <= MAX_FILE_AND_RANK && y >= 0 && y <= MAX_FILE_AND_RANK;
@@ -54,4 +34,43 @@ function getKnightMoves([startingX, startingY]) {
   }
 
   return moves;
+}
+
+// Note: There may be several shortest knight paths but this will return the first one it finds
+export function getShortestKnightPath(startingPosition, targetPosition) {
+  if (!isAValidPosition(startingPosition)) {
+    throw new Error("Starting position is not valid");
+  }
+  if (!isAValidPosition(targetPosition)) {
+    throw new Error("Target position is not valid");
+  }
+
+  // Queue will contain the move lists to explore
+  const firstMove = new MoveList([startingPosition]);
+  const queue = [firstMove];
+
+  let currentMoveList;
+  while ((currentMoveList = queue.shift())) {
+    const nextPossibleMoves = getKnightMoves(
+      currentMoveList.getCurrentPosition(),
+    );
+    for (let i = 0; i < nextPossibleMoves.length; i++) {
+      const newMoveList = new MoveList([...currentMoveList.moveList]);
+      const isUniqueMove = newMoveList.addMove(nextPossibleMoves[i]);
+      if (!isUniqueMove) {
+        // Ignore this move list because it is a loop
+        continue;
+      }
+
+      if (
+        newMoveList.getCurrentPosition().toString() ===
+        targetPosition.toString()
+      ) {
+        // There will always be a solution so this is the only return
+        return newMoveList.moveList;
+      } else {
+        queue.push(newMoveList);
+      }
+    }
+  }
 }
