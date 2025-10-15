@@ -5,7 +5,7 @@ const chessboard = document.querySelector("#chessboard");
 const CHESSBOARD_SIZE = 8;
 
 // Ensure bottom left corner coordinates are (0,0)
-let rankNumber = 1;
+let rankNumber = 8;
 for (let y = CHESSBOARD_SIZE - 1; y >= 0; y--) {
   let fileLetter = "`"; // The character just before "a"
   for (let x = 0; x < CHESSBOARD_SIZE; x++) {
@@ -38,7 +38,7 @@ for (let y = CHESSBOARD_SIZE - 1; y >= 0; y--) {
 
     chessboard.appendChild(square);
   }
-  rankNumber++;
+  rankNumber--;
 }
 
 // Place knight in the middle of the board
