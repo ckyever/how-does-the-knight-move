@@ -101,6 +101,12 @@ body {
   position: relative;
 }
 
+/* Do hover effect on all squares except the one the knight is on */
+.square:not(:has(img.knight)):hover {
+  filter: sepia(100%) saturate(200%) hue-rotate(30deg);
+  box-shadow: inset 0 0 0 3px #ffffff;
+}
+
 .square.black {
   background-color: var(--black-square-color);
 }
