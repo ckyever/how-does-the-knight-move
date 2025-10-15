@@ -42,15 +42,43 @@ for (let y = CHESSBOARD_SIZE - 1; y >= 0; y--) {
   rankNumber--;
 }
 
-// Place knight in the middle of the board
-const knightPosition = [4, 4];
-let currentSquare = document.querySelector(
+let knightPosition = [4, 4];
+const knight = document.createElement("img");
+knight.id = "knight";
+knight.src = knightPiece;
+
+const defaultSquare = document.querySelector(
   `[data-x="${knightPosition[0]}"][data-y="${knightPosition[1]}"`,
 );
-const knight = document.createElement("img");
-knight.classList = "knight";
-knight.src = knightPiece;
-currentSquare.appendChild(knight);
+defaultSquare.appendChild(knight);
+
+function moveKnight(knight, newPosition) {
+  if (knight == null) {
+    return;
+  }
+  // Get current position
+  const firstPosition = knight.getBoundingClientRect();
+
+  // Get target position and move knight
+  knightPosition = newPosition;
+  const targetSquare = document.querySelector(
+    `[data-x="${knightPosition[0]}"][data-y="${knightPosition[1]}"`,
+  );
+  targetSquare.appendChild(knight);
+  const lastPosition = knight.getBoundingClientRect();
+
+  // Immediately snap it back visually
+  const deltaX = firstPosition.left - lastPosition.left;
+  const deltaY = firstPosition.top - lastPosition.top;
+  knight.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+  knight.style.transition = "none"; // disable transition for the snap
+
+  // Animate the transform back to the target position
+  requestAnimationFrame(() => {
+    knight.style.transition = "transform 0.7s ease-out";
+    knight.style.transform = "none";
+  });
+}
 
 chessboard.addEventListener("click", (event) => {
   const x = event.target.dataset.x;
@@ -59,6 +87,8 @@ chessboard.addEventListener("click", (event) => {
   if (x != null && y != null) {
     console.log(`Clicked on (${x}, ${y})`);
     const path = getShortestKnightPath(knightPosition, [x, y]);
-    console.table(path);
+
+    // Loop through each position in path
+    // Move to each
   }
 });
