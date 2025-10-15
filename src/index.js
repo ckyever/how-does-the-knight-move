@@ -1,7 +1,7 @@
 import "./styles.css";
+import knightPiece from "./assets/white-knight.svg";
 
 const chessboard = document.querySelector("#chessboard");
-
 const CHESSBOARD_SIZE = 8;
 
 // Ensure bottom left corner coordinates are (0,0)
@@ -40,3 +40,19 @@ for (let y = CHESSBOARD_SIZE - 1; y >= 0; y--) {
   }
   rankNumber++;
 }
+
+// Place knight in the middle of the board
+const knightPosition = [4, 4];
+let currentSquare = document.querySelector(
+  `[data-x="${knightPosition[0]}"][data-y="${knightPosition[1]}"`,
+);
+const knight = document.createElement("img");
+knight.classList = "knight";
+knight.src = knightPiece;
+currentSquare.appendChild(knight);
+
+chessboard.addEventListener("click", (event) => {
+  console.log(
+    `Clicked on (${event.target.dataset.x}, ${event.target.dataset.y})`,
+  );
+});

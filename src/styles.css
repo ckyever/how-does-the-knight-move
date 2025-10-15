@@ -96,6 +96,8 @@ body {
 }
 
 .square {
+  display: flex;
+  justify-content: center;
   position: relative;
 }
 
@@ -123,10 +125,20 @@ body {
   user-select: none;
 }
 
+.square > .label.rank {
+  padding: 0 4px;
+  top: 0;
+  left: 0;
+}
+
 .square > .label.file {
   padding: 0 8px;
   bottom: 0;
   right: 0;
+}
+
+.knight {
+  width: 85%;
 }
 
 #chessboard {
@@ -135,5 +147,4 @@ body {
   grid-template-rows: repeat(8, 1fr);
   width: min(65vw, 65vh);
   height: min(65vw, 65vh);
-  border: 2px solid black;
 }
