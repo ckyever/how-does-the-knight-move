@@ -20,8 +20,38 @@ getKnightPath({x, y})
 
 */
 
+/*
+  Chessboard positions are indicated using [x, y] coordinates starting from the bottom left corner
+*/
+
 const MAX_FILE_AND_RANK = 7; // Where first file/rank is 0
 
 function isAValidPosition([x, y]) {
   return x >= 0 && x <= MAX_FILE_AND_RANK && y >= 0 && y <= MAX_FILE_AND_RANK;
+}
+
+function getKnightMoves([startingX, startingY]) {
+  const moves = [];
+
+  // Possible vertical moves
+  moves.push([startingX + 1, startingY + 2]);
+  moves.push([startingX - 1, startingY + 2]);
+  moves.push([startingX + 1, startingY - 2]);
+  moves.push([startingX - 1, startingY - 2]);
+
+  // Possible horizontal moves
+  moves.push([startingX + 2, startingY + 1]);
+  moves.push([startingX - 2, startingY + 1]);
+  moves.push([startingX + 2, startingY - 1]);
+  moves.push([startingX - 2, startingY - 1]);
+
+  // We mutate the array instead of filter for memory reasons
+  for (let i = 0; i < moves.length; i++) {
+    if (!isAValidPosition(moves[i])) {
+      moves.splice(i, 1);
+      i--;
+    }
+  }
+
+  return moves;
 }
