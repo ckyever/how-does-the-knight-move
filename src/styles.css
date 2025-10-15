@@ -77,3 +77,37 @@ h6 {
 }
 
 /* End of CSS Reset */
+
+:root {
+  --main-background-color: #262522;
+  --black-square-color: #739552;
+  --white-square-color: #ebecd0;
+}
+
+body {
+  background-color: var(--main-background-color);
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}
+
+.square.black {
+  background-color: var(--black-square-color);
+}
+
+.square.white {
+  background-color: var(--white-square-color);
+}
+
+#chessboard {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+  width: min(65vw, 65vh);
+  height: min(65vw, 65vh);
+  border: 2px solid black;
+}
