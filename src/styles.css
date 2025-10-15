@@ -95,12 +95,37 @@ body {
   height: 80vh;
 }
 
+.square {
+  position: relative;
+}
+
 .square.black {
   background-color: var(--black-square-color);
 }
 
+.square.black > .label {
+  color: var(--white-square-color);
+}
+
 .square.white {
   background-color: var(--white-square-color);
+}
+
+.square.white > .label {
+  color: var(--black-square-color);
+}
+
+.square > .label {
+  font-size: 1.4rem;
+  font-weight: 500;
+  padding: 4px;
+  position: absolute;
+}
+
+.square > .label.file {
+  padding: 0 8px;
+  bottom: 0;
+  right: 0;
 }
 
 #chessboard {
