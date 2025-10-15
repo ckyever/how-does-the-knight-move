@@ -1,4 +1,5 @@
 import "./styles.css";
+import { getShortestKnightPath } from "./knight.js";
 import knightPiece from "./assets/white-knight.svg";
 
 const chessboard = document.querySelector("#chessboard");
@@ -52,7 +53,12 @@ knight.src = knightPiece;
 currentSquare.appendChild(knight);
 
 chessboard.addEventListener("click", (event) => {
-  console.log(
-    `Clicked on (${event.target.dataset.x}, ${event.target.dataset.y})`,
-  );
+  const x = event.target.dataset.x;
+  const y = event.target.dataset.y;
+
+  if (x != null && y != null) {
+    console.log(`Clicked on (${x}, ${y})`);
+    const path = getShortestKnightPath(knightPosition, [x, y]);
+    console.table(path);
+  }
 });
