@@ -144,6 +144,9 @@ body {
 }
 
 .knight {
+  -webkit-user-drag: none;
+  user-drag: none;
+  user-select: none;
   width: 85%;
 }
 
