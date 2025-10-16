@@ -83,6 +83,7 @@ h6 {
   --black-square-color: #739552;
   --white-square-color: #ebecd0;
   --target-square-color: #e67878;
+  --inner-square-border: inset 0 0 0 3px #ffffff;
 }
 
 body {
@@ -105,7 +106,7 @@ body {
 /* Do hover effect on all squares except the one the knight is on */
 .square:not(:has(img#knight)):hover {
   filter: sepia(100%) saturate(200%) hue-rotate(30deg);
-  box-shadow: inset 0 0 0 3px #ffffff;
+  box-shadow: var(--inner-square-border);
 }
 
 .square.black {
@@ -122,6 +123,7 @@ body {
 
 .square.destination {
   background-color: var(--target-square-color);
+  box-shadow: var(--inner-square-border);
 }
 
 .square.white > .label {
