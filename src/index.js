@@ -1,10 +1,12 @@
 import "./styles.css";
 import { getShortestKnightPath } from "./knight.js";
 import knightPiece from "./assets/white-knight.svg";
+import chessMoveAudio from "./assets/chess_move.wav";
 import { convertPositionToChessNotation, delay } from "./utility.js";
 
 const chessboard = document.querySelector("#chessboard");
 const CHESSBOARD_SIZE = 8;
+const moveSound = new Audio(chessMoveAudio);
 
 // Ensure bottom left corner coordinates are (0,0)
 let rankNumber = 8;
@@ -84,6 +86,7 @@ chessboard.addEventListener("click", async (event) => {
       move = generateMoveElement(index, notation);
       moveList.append(move);
       await moveKnight(knight, path[index]);
+      moveSound.play();
       await delay(300);
     }
     isAnimating = false;
