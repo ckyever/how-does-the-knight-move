@@ -4,7 +4,7 @@ A website to show the shortest path for a knight on a chess board using a breadt
 
 👉 [Live Demo](https://ckyever.github.io/how-does-the-knight-move)
 
-![Demo GIF](./assets/demo.gif)
+![Demo GIF](./src/assets/demo.gif)
 
 ## Acknowledgement
 
