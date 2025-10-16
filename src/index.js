@@ -42,15 +42,29 @@ for (let y = CHESSBOARD_SIZE - 1; y >= 0; y--) {
   rankNumber--;
 }
 
+// Create the knight and place on the board
 let knightPosition = [4, 4];
 const knight = document.createElement("img");
 knight.id = "knight";
 knight.src = knightPiece;
-
 const defaultSquare = document.querySelector(
   `[data-x="${knightPosition[0]}"][data-y="${knightPosition[1]}"`,
 );
 defaultSquare.appendChild(knight);
+
+// Handle selecting a target square and move the knight there
+chessboard.addEventListener("click", (event) => {
+  const x = event.target.dataset.x;
+  const y = event.target.dataset.y;
+
+  if (x != null && y != null) {
+    console.log(`Clicked on (${x}, ${y})`);
+    const path = getShortestKnightPath(knightPosition, [x, y]);
+
+    // Loop through each position in path
+    // Move to each
+  }
+});
 
 function moveKnight(knight, newPosition) {
   if (knight == null) {
@@ -79,16 +93,3 @@ function moveKnight(knight, newPosition) {
     knight.style.transform = "none";
   });
 }
-
-chessboard.addEventListener("click", (event) => {
-  const x = event.target.dataset.x;
-  const y = event.target.dataset.y;
-
-  if (x != null && y != null) {
-    console.log(`Clicked on (${x}, ${y})`);
-    const path = getShortestKnightPath(knightPosition, [x, y]);
-
-    // Loop through each position in path
-    // Move to each
-  }
-});
