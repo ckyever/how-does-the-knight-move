@@ -54,6 +54,10 @@ const defaultSquare = document.querySelector(
 defaultSquare.appendChild(knight);
 
 const moveList = document.getElementById("moves");
+const notation = convertPositionToChessNotation(knightPosition);
+const move = generateMoveElement(0, notation);
+moveList.append(move);
+
 let isAnimating = false;
 chessboard.addEventListener("click", async (event) => {
   // Prevent new moves while animating
@@ -68,11 +72,16 @@ chessboard.addEventListener("click", async (event) => {
     const finalSquare = document.querySelector(`[data-x="${x}"][data-y="${y}"`);
     finalSquare.classList.add("destination");
 
+    // Add first current position as move 0
     moveList.innerText = "";
+    let notation = convertPositionToChessNotation(knightPosition);
+    let move = generateMoveElement(0, notation);
+    moveList.append(move);
+
     isAnimating = true;
     for (let index = 1; index < path.length; index++) {
-      const notation = convertPositionToChessNotation(path[index]);
-      const move = generateMoveElement(index, notation);
+      notation = convertPositionToChessNotation(path[index]);
+      move = generateMoveElement(index, notation);
       moveList.append(move);
       await moveKnight(knight, path[index]);
       await delay(300);
