@@ -82,6 +82,7 @@ h6 {
   --main-background-color: #262522;
   --black-square-color: #739552;
   --white-square-color: #ebecd0;
+  --target-square-color: #e67878;
 }
 
 body {
@@ -119,6 +120,10 @@ body {
   background-color: var(--white-square-color);
 }
 
+.square.destination {
+  background-color: var(--target-square-color);
+}
+
 .square.white > .label {
   color: var(--black-square-color);
 }
@@ -149,7 +154,7 @@ body {
   user-drag: none;
   user-select: none;
   width: 85%;
-  z-index: 1;
+  z-index: 10;
 }
 
 #chessboard {

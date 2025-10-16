@@ -63,8 +63,9 @@ chessboard.addEventListener("click", async (event) => {
   const y = event.target.dataset.y;
 
   if (x != null && y != null) {
-    console.log(`Clicked on (${x}, ${y})`);
     const path = getShortestKnightPath(knightPosition, [x, y]);
+    const finalSquare = document.querySelector(`[data-x="${x}"][data-y="${y}"`);
+    finalSquare.classList.add("destination");
 
     isAnimating = true;
     for (let index = 1; index < path.length; index++) {
@@ -72,6 +73,7 @@ chessboard.addEventListener("click", async (event) => {
       await delay(300);
     }
     isAnimating = false;
+    finalSquare.classList.remove("destination");
   }
 });
 
