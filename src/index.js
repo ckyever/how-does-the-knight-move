@@ -52,44 +52,78 @@ const defaultSquare = document.querySelector(
 );
 defaultSquare.appendChild(knight);
 
-// Handle selecting a target square and move the knight there
-chessboard.addEventListener("click", (event) => {
+// Add a flag to track if animation is in progress
+let isAnimating = false;
+
+// Change the click handler to check the flag
+chessboard.addEventListener("click", async (event) => {
+  // Prevent new moves while animating
+  if (isAnimating) {
+    return;
+  }
+
   const x = event.target.dataset.x;
   const y = event.target.dataset.y;
-
   if (x != null && y != null) {
     console.log(`Clicked on (${x}, ${y})`);
     const path = getShortestKnightPath(knightPosition, [x, y]);
 
+    isAnimating = true;
     // Loop through each position in path
     // Move to each
+    for (let index = 1; index < path.length; index++) {
+      await moveKnight(knight, path[index]);
+    }
+    isAnimating = false;
   }
 });
 
 function moveKnight(knight, newPosition) {
-  if (knight == null) {
-    return;
-  }
-  // Get current position
-  const firstPosition = knight.getBoundingClientRect();
+  return new Promise((resolve) => {
+    if (knight == null) {
+      resolve();
+      return;
+    }
 
-  // Get target position and move knight
-  knightPosition = newPosition;
-  const targetSquare = document.querySelector(
-    `[data-x="${knightPosition[0]}"][data-y="${knightPosition[1]}"`,
-  );
-  targetSquare.appendChild(knight);
-  const lastPosition = knight.getBoundingClientRect();
+    // Get current position
+    const firstPosition = knight.getBoundingClientRect();
+    // Get target position and move knight
+    knightPosition = newPosition;
+    const targetSquare = document.querySelector(
+      `[data-x="${knightPosition[0]}"][data-y="${knightPosition[1]}"`,
+    );
+    targetSquare.appendChild(knight);
+    const lastPosition = knight.getBoundingClientRect();
 
-  // Immediately snap it back visually
-  const deltaX = firstPosition.left - lastPosition.left;
-  const deltaY = firstPosition.top - lastPosition.top;
-  knight.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
-  knight.style.transition = "none"; // disable transition for the snap
+    // Check if there's actually a move (prevents issues with same-square clicks)
+    const deltaX = firstPosition.left - lastPosition.left;
+    const deltaY = firstPosition.top - lastPosition.top;
 
-  // Animate the transform back to the target position
-  requestAnimationFrame(() => {
-    knight.style.transition = "transform 0.7s ease-out";
-    knight.style.transform = "none";
+    if (deltaX === 0 && deltaY === 0) {
+      resolve();
+      return;
+    }
+
+    // Immediately snap it back visually
+    knight.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+    knight.style.transition = "none";
+
+    // Force a reflow to ensure the transform is applied
+    knight.offsetHeight;
+
+    // Animate the transform back to the target position
+    requestAnimationFrame(() => {
+      knight.style.transition = "transform 0.7s ease-out";
+      knight.style.transform = "none";
+
+      // Wait for animation to finish
+      knight.addEventListener("transitionend", function handler(e) {
+        // Only respond to transform transitions on this element
+        if (e.propertyName === "transform" && e.target === knight) {
+          knight.removeEventListener("transitionend", handler);
+          resolve();
+        }
+      });
+    });
   });
 }
