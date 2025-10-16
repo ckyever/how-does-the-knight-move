@@ -159,6 +159,7 @@ body .container {
   user-select: none;
   width: 85%;
   z-index: 10;
+  margin-left: -8px;
 }
 
 #playing-area {
