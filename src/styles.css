@@ -129,6 +129,7 @@ body {
   padding: 4px;
   position: absolute;
   user-select: none;
+  z-index: 2;
 }
 
 .square > .label.rank {
@@ -138,8 +139,8 @@ body {
 }
 
 .square > .label.file {
-  padding: 0 8px;
-  bottom: 0;
+  padding: 0 4px;
+  bottom: -3px;
   right: 0;
 }
 
