@@ -228,6 +228,10 @@ footer {
 }
 
 @media (max-width: 600px) {
+  :root {
+    --inner-square-border: inset 0 0 0 2px #ffffff;
+  }
+
   body {
     font-size: 0.7rem;
   }
@@ -242,6 +246,7 @@ footer {
 
   footer {
     font-size: 0.8rem;
+    font-weight: 500;
   }
 
   #knight {
@@ -251,17 +256,17 @@ footer {
   #playing-area {
     display: grid;
     grid-template-columns: 1fr;
-    margin: 20px;
+    margin: 0;
     gap: 8px;
   }
 
   #chessboard {
-    width: 90vw;
-    height: 90vw;
+    width: 100vw;
+    height: 100vw;
   }
 
   #move-list {
-    margin-left: 0;
+    margin-left: 10px;
   }
 
   #move-list h2 {
@@ -269,6 +274,8 @@ footer {
   }
 
   #instructions {
+    text-align: center;
+    margin-top: 10px;
     font-size: 0.9rem;
     grid-column: span 1;
   }
@@ -281,5 +288,11 @@ footer {
     padding: 0 0px;
     top: 0;
     left: 1px;
+  }
+
+  .square > .label.file {
+    padding: 0 4px;
+    bottom: -3px;
+    right: -2.5px;
   }
 }
