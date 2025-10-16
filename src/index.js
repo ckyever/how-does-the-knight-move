@@ -1,6 +1,7 @@
 import "./styles.css";
 import { getShortestKnightPath } from "./knight.js";
 import knightPiece from "./assets/white-knight.svg";
+import { delay } from "./utility.js";
 
 const chessboard = document.querySelector("#chessboard");
 const CHESSBOARD_SIZE = 8;
@@ -52,27 +53,23 @@ const defaultSquare = document.querySelector(
 );
 defaultSquare.appendChild(knight);
 
-// Add a flag to track if animation is in progress
 let isAnimating = false;
-
-// Change the click handler to check the flag
 chessboard.addEventListener("click", async (event) => {
   // Prevent new moves while animating
   if (isAnimating) {
     return;
   }
-
   const x = event.target.dataset.x;
   const y = event.target.dataset.y;
+
   if (x != null && y != null) {
     console.log(`Clicked on (${x}, ${y})`);
     const path = getShortestKnightPath(knightPosition, [x, y]);
 
     isAnimating = true;
-    // Loop through each position in path
-    // Move to each
     for (let index = 1; index < path.length; index++) {
       await moveKnight(knight, path[index]);
+      await delay(300);
     }
     isAnimating = false;
   }
@@ -87,6 +84,7 @@ function moveKnight(knight, newPosition) {
 
     // Get current position
     const firstPosition = knight.getBoundingClientRect();
+
     // Get target position and move knight
     knightPosition = newPosition;
     const targetSquare = document.querySelector(
