@@ -1,7 +1,7 @@
 import "./styles.css";
 import { getShortestKnightPath } from "./knight.js";
 import knightPiece from "./assets/white-knight.svg";
-import { delay } from "./utility.js";
+import { convertPositionToChessNotation, delay } from "./utility.js";
 
 const chessboard = document.querySelector("#chessboard");
 const CHESSBOARD_SIZE = 8;
@@ -53,6 +53,7 @@ const defaultSquare = document.querySelector(
 );
 defaultSquare.appendChild(knight);
 
+const moveList = document.getElementById("moves");
 let isAnimating = false;
 chessboard.addEventListener("click", async (event) => {
   // Prevent new moves while animating
@@ -67,8 +68,12 @@ chessboard.addEventListener("click", async (event) => {
     const finalSquare = document.querySelector(`[data-x="${x}"][data-y="${y}"`);
     finalSquare.classList.add("destination");
 
+    moveList.innerText = "";
     isAnimating = true;
     for (let index = 1; index < path.length; index++) {
+      const notation = convertPositionToChessNotation(path[index]);
+      const move = generateMoveElement(index, notation);
+      moveList.append(move);
       await moveKnight(knight, path[index]);
       await delay(300);
     }
@@ -126,4 +131,21 @@ function moveKnight(knight, newPosition) {
       });
     });
   });
+}
+
+function generateMoveElement(moveNumber, notation) {
+  const move = document.createElement("div");
+  move.classList = "move";
+
+  const moveNumberText = document.createElement("span");
+  moveNumberText.classList = "move-number";
+  moveNumberText.textContent = moveNumber + ".";
+
+  const notationText = document.createElement("span");
+  notationText.classList = "notation";
+  notationText.textContent = notation;
+
+  move.appendChild(moveNumberText);
+  move.appendChild(notationText);
+  return move;
 }

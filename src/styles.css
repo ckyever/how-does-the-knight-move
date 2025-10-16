@@ -80,6 +80,7 @@ h6 {
 
 :root {
   --main-background-color: #262522;
+  --accent-background-color: #363531;
   --black-square-color: #739552;
   --white-square-color: #ebecd0;
   --target-square-color: #e67878;
@@ -159,10 +160,39 @@ body {
   z-index: 10;
 }
 
+#playing-area {
+  display: flex;
+}
+
 #chessboard {
   display: grid;
   grid-template-columns: repeat(8, 1fr);
   grid-template-rows: repeat(8, 1fr);
   width: min(65vw, 65vh);
   height: min(65vw, 65vh);
+}
+
+#move-list {
+  align-self: flex-start;
+  color: white;
+  margin-left: 12px;
+}
+
+#move-list h2 {
+  margin-bottom: 8px;
+}
+
+#move-list .move {
+  display: flex;
+  padding: 4px;
+  gap: 24px;
+  font-weight: 600;
+}
+
+#move-list .move:last-child {
+  background-color: var(--accent-background-color);
+}
+
+#move-list .move .move-number {
+  color: gray;
 }
