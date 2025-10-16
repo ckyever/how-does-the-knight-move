@@ -293,7 +293,7 @@ footer {
 
   .square > .label.file {
     padding: 0 4px;
-    bottom: -3px;
-    right: -2.5px;
+    bottom: -2px;
+    right: -2px;
   }
 }
