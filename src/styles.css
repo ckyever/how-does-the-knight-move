@@ -89,6 +89,7 @@ h6 {
 
 body {
   background-color: var(--main-background-color);
+  font-family: "Noto Sans", sans-serif;
 }
 
 body .container {
