@@ -120,7 +120,7 @@ footer {
 }
 
 /* Do hover effect on all squares except the one the knight is on */
-.square:not(:has(img#knight)):hover {
+.square:not(:has(img#knight)):not(.destination):hover {
   filter: sepia(100%) saturate(200%) hue-rotate(30deg);
   box-shadow: var(--inner-square-border);
 }
@@ -258,11 +258,6 @@ footer {
   #chessboard {
     width: 90vw;
     height: 90vw;
-  }
-
-  /* Stop square from being highlighted when tapping on mobile */
-  .square:not(:has(img#knight)):hover {
-    filter: none;
   }
 
   #move-list {
