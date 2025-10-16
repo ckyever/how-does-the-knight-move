@@ -91,8 +91,9 @@ body {
   background-color: var(--main-background-color);
 }
 
-.container {
+body .container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 80vh;
@@ -161,7 +162,9 @@ body {
 }
 
 #playing-area {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: 0 1vw 0 10vw;
 }
 
 #chessboard {
@@ -195,4 +198,9 @@ body {
 
 #move-list .move .move-number {
   color: gray;
+}
+
+#instructions {
+  grid-column: span 2;
+  color: white;
 }
